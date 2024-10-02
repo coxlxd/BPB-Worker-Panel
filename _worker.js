@@ -3137,6 +3137,15 @@ function buildXrayRoutingRules (localDNS, blockAds, bypassIran, blockPorn, bypas
             type: "field"
         },
         {
+            inboundTag: [
+                "socks-in",
+                "http-in"
+            ],
+            port: "53",
+            outboundTag: "dns-out",
+            type: "field"
+        },
+        {
             network: "udp",
             port: "53",
             outboundTag: "direct",
@@ -3647,7 +3656,6 @@ async function getFragmentConfigs(env, hostName) {
     }
 
     bestFragment.observatory.subjectSelector = ["frag"];
-    bestFragment.observatory.probeInterval = '30s';
     bestFragment.routing.balancers[0].selector = ["frag"];
     const workerLessConfig = await buildWorkerLessConfig(remoteDNS, localDNS, lengthMin,  lengthMax,  intervalMin,  intervalMax, blockAds, bypassIran, blockPorn, bypassLAN, bypassChina, blockUDP443); 
     Configs.push(bestPing, bestFragment, workerLessConfig);
